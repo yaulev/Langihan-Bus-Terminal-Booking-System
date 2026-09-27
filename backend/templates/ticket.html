@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}E-Boarding Pass · Langihan Integrated Bus Terminal{% endblock %}
+
+{% block content %}
+<div class="ticket-view-page">
+    {% if booking %}
+    <div class="ticket-container">
+        <div class="ticket-success-badge">
+            <span class="check-icon">✓</span>
+            <h2>Booking Confirmed!</h2>
+            <p>Official Langihan Integrated Bus Terminal E-Boarding Pass</p>
+        </div>
+
+        <div class="boarding-pass">
+            <!-- Ticket Top -->
+            <div class="pass-header">
+                <div>
+                    <span class="pass-region">Republic of the Philippines · Caraga Region</span>
+                    <h3 class="pass-terminal-name">Langihan Integrated Bus Terminal</h3>
+                </div>
+                <span class="pass-status">CONFIRMED</span>
+            </div>
+
+            <!-- Route Block -->
+            <div class="pass-route-strip">
+                <div class="route-point">
+                    <span class="point-label">ORIGIN</span>
+                    <strong class="point-code">BXU</strong>
+                    <span class="point-city">Butuan City (Langihan)</span>
+                </div>
+                <div class="route-transit">
+                    <span>🚌</span>
+                    <div class="dashed-line"></div>
+                    <span class="duration-label">{{ schedule.duration if schedule else 'Direct' }}</span>
+                </div>
+                <div class="route-point">
+                    <span class="point-label">DESTINATION</span>
+                    <strong class="point-code text-gold">{{ route.shortDest if route else 'DEST' }}</strong>
+                    <span class="point-city">{{ route.destination if route else 'Arrival Hub' }}</span>
+                </div>
+            </div>
+
+            <!-- Details Table -->
+            <div class="pass-details">
+                <div class="detail-row">
+                    <span class="detail-label">Reference Number:</span>
+                    <strong class="detail-val font-mono text-gold">{{ booking.refNumber }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Passenger:</span>
+                    <strong class="detail-val">{{ booking.fullName }} ({{ booking.passengerType }})</strong>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Assigned Seat:</span>
+                    <strong class="detail-val font-mono text-gold">Seat #{{ booking.seatNumber }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Departure Bay:</span>
+                    <strong class="detail-val">Bay #{{ schedule.bayNumber if schedule else '4' }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Travel Date:</span>
+                    <strong class="detail-val">{{ booking.travelDate }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Fare Paid:</span>
+                    <strong class="detail-val text-gold">₱{{ booking.totalFare }} (Incl. ₱10 Terminal Fee)</strong>
+                </div>
+            </div>
+
+            <!-- Print Actions -->
+            <div class="pass-actions">
+                <button type="button" class="btn-primary-gold" onclick="window.print()">🖨 Print Boarding Pass</button>
+                <a href="{{ url_for('pages.index') }}" class="btn-secondary-glass">Return to Home</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="error-container">
+        <h2>Ticket Not Found</h2>
+        <p>{{ error }}</p>
+        <a href="{{ url_for('pages.index') }}" class="btn-primary-gold">Return to Home</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

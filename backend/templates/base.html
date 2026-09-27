@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Langihan Integrated Bus Terminal · Butuan City{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="theme-dark">
+    <!-- Main Shell with Sidebar Layout -->
+    <div class="app-layout">
+        <!-- Collapsible / Dockable Sidebar -->
+        <aside class="app-sidebar" id="appSidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <a href="{{ url_for('pages.index') }}" class="sidebar-brand">
+                    <div class="brand-icon">🚌</div>
+                    <div class="brand-text">
+                        <h2>Langihan Hub</h2>
+                        <span>Caraga & Davao Transit</span>
+                    </div>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">✕</button>
+            </div>
+
+            <!-- Terminal Real-Time Status Widget in Sidebar -->
+            <div class="sidebar-widget">
+                <div class="widget-row">
+                    <span class="widget-dot green"></span>
+                    <span class="widget-title">Live Terminal Status</span>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-metric">
+                        <span class="metric-label">Weather:</span>
+                        <span class="metric-val">28°C Partly Sunny</span>
+                    </div>
+                    <div class="widget-metric">
+                        <span class="metric-label">Crowding:</span>
+                        <span class="metric-val text-emerald">Low (24%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('pages.index') }}" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Terminal Dashboard</span>
+                </a>
+                <a href="{{ url_for('pages.booking_page') }}" class="nav-link">
+                    <span class="nav-icon">🎫</span>
+                    <span class="nav-text">Book Bus / Van Trip</span>
+                </a>
+                <a href="{{ url_for('pages.dispatch_board') }}" class="nav-link">
+                    <span class="nav-icon">📡</span>
+                    <span class="nav-text">Live Bay Dispatch (FIDS)</span>
+                </a>
+                <a href="{{ url_for('pages.index') }}#ergonomics-section" class="nav-link">
+                    <span class="nav-icon">✦</span>
+                    <span class="nav-text">Ergonomics & Comfort</span>
+                </a>
+            </nav>
+
+            <!-- Bottom of Sidebar: Settings & Theme -->
+            <div class="sidebar-bottom">
+                <!-- Theme Switch inside Sidebar -->
+                <div class="sidebar-theme-switch">
+                    <button type="button" class="btn-theme-toggle" id="themeToggleBtn">
+                        <span id="themeIcon">☀️</span>
+                        <span id="themeLabel">Light Mode</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="app-main-content">
+            <!-- Top Sticky Navigation Bar -->
+            <header class="top-nav-bar">
+                <div class="nav-left">
+                    <button class="menu-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle navigation menu">
+                        <span class="hamburger-bar"></span>
+                        <span class="hamburger-bar"></span>
+                        <span class="hamburger-bar"></span>
+                    </button>
+                    <a href="{{ url_for('pages.index') }}" class="nav-logo">
+                        <div class="logo-badge">🚌</div>
+                        <div>
+                            <h1 class="logo-title">Langihan Terminal</h1>
+                            <span class="logo-sub">Butuan City Transit Hub</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <!-- Top Theme Switch -->
+                    <button type="button" class="theme-pill-btn" id="topThemeBtn" title="Toggle Light / Dark mode">
+                        <span class="theme-icon">☀️</span>
+                        <span class="theme-text">Light Mode</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Body Block -->
+            <main class="main-container">
+                {% block content %}{% endblock %}
+            </main>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <div class="footer-container" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p>© 2026 Langihan Integrated Bus Terminal (LIBT) · Butuan City, Agusan del Norte.</p>
+                        <p class="footer-sub">Exclusively servicing Caraga Region & Davao Region routes · Built with Python (Flask).</p>
+                    </div>
+                    <a href="{{ url_for('api.download_project_zip') }}" class="footer-dl-icon" title="Download project files" aria-label="Download project files" style="opacity: 0.5; color: inherit; text-decoration: none; font-size: 13px; padding: 4px;">
+                        ⬇
+                    </a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

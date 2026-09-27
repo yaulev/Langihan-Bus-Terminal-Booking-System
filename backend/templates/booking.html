@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Seat · Langihan Integrated Bus Terminal{% endblock %}
+
+{% block content %}
+<div class="booking-page">
+    <div class="page-header">
+        <a href="{{ url_for('pages.index') }}" class="back-link">← Return to Dashboard</a>
+        <h1 class="page-title">Reserve Your Seat</h1>
+        <p class="page-sub">Select your destination, departure time, seat number, and passenger details.</p>
+    </div>
+
+    <div class="booking-grid">
+        <!-- Form Panel -->
+        <div class="booking-card">
+            <form action="{{ url_for('api.create_booking') }}" method="POST" id="bookingForm">
+                <!-- Route Selection -->
+                <div class="form-group">
+                    <label for="routeSelect">Destination Corridor:</label>
+                    <select id="routeSelect" name="routeId" class="form-control" required>
+                        <option value="">-- Choose Destination --</option>
+                        {% for r in routes %}
+                        <option value="{{ r.id }}" {% if selected_route and selected_route.id == r.id %}selected{% endif %}>
+                            {{ r.destination }} ({{ r.region }} Region - ₱{{ r.baseFare }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Schedule Selection -->
+                <div class="form-group">
+                    <label for="scheduleSelect">Departure Schedule & Carrier:</label>
+                    <select id="scheduleSelect" name="scheduleId" class="form-control" required>
+                        <option value="">-- Select Departure Time --</option>
+                        {% for s in schedules %}
+                        <option value="{{ s.id }}" data-route="{{ s.routeId }}" data-fare="{{ s.baseFare }}" {% if selected_schedule and selected_schedule.id == s.id %}selected{% endif %}>
+                            {{ s.departureTime }} · {{ s.operator }} ({{ s.vehicleType }} - Bay {{ s.bayNumber }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Travel Date -->
+                <div class="form-group">
+                    <label for="travelDate">Travel Date:</label>
+                    <input type="date" id="travelDate" name="travelDate" class="form-control" required>
+                </div>
+
+                <!-- Seat Assignment -->
+                <div class="form-group">
+                    <label for="seatNumber">Seat Number (1 - 45):</label>
+                    <input type="number" id="seatNumber" name="seatNumber" min="1" max="45" value="12" class="form-control" required>
+                    <small class="field-hint">Seats 1–4 are designated Priority Seats (Senior/PWD/Pregnant).</small>
+                </div>
+
+                <!-- Passenger Full Name -->
+                <div class="form-group">
+                    <label for="fullName">Passenger Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="e.g. Maria Santos Villanueva" class="form-control" required>
+                </div>
+
+                <!-- Contact Number -->
+                <div class="form-group">
+                    <label for="contactNumber">Mobile Number:</label>
+                    <input type="tel" id="contactNumber" name="contactNumber" placeholder="0917-123-4567" class="form-control" required>
+                </div>
+
+                <!-- Passenger Type (Discount) -->
+                <div class="form-group">
+                    <label for="passengerType">Passenger Category (20% Discount):</label>
+                    <select id="passengerType" name="passengerType" class="form-control">
+                        <option value="Regular">Regular Passenger</option>
+                        <option value="Student">Student (20% Off)</option>
+                        <option value="Senior Citizen">Senior Citizen (20% Off)</option>
+                        <option value="PWD">Person with Disability (20% Off)</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary-gold btn-block" id="confirmBookingBtn">
+                    Confirm Booking & Issue E-Boarding Pass
+                </button>
+            </form>
+        </div>
+
+        <!-- Right Side Seat Map & Tips -->
+        <div class="seat-info-card">
+            <h3 class="card-title">Langihan Terminal Seating Ergonomics</h3>
+            <p class="card-desc">All Bachelor Express and UV Express vehicles departing Langihan Terminal feature high-back contoured seating designed for regional lumbar support.</p>
+
+            <div class="seat-legend">
+                <div class="legend-item"><span class="seat-box available"></span> Available</div>
+                <div class="legend-item"><span class="seat-box priority"></span> Priority (1-4)</div>
+                <div class="legend-item"><span class="seat-box booked"></span> Booked</div>
+            </div>
+
+            <div class="bus-schematic">
+                <div class="windshield-badge">FRONT / WINDSHIELD</div>
+                <div class="seats-preview">
+                    {% for i in range(1, 25) %}
+                    <span class="preview-seat {% if i in booked_seats %}booked{% elif i <= 4 %}priority{% endif %}">
+                        {{ i }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

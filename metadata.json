@@ -1,0 +1,6 @@
+{
+  "name": "Langihan Integrated Bus Terminal - Butuan City Booking & Dispatch",
+  "description": "Official online bus ticketing, live bay dispatch board, seat reservation, and terminal management system for Langihan Integrated Bus Terminal in Butuan City.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

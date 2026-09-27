@@ -1,0 +1,417 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #070a11;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Custom dark glass styles */
+.glass-card {
+  background: rgba(12, 18, 30, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 204, 21, 0.15);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-glow:hover {
+  border-color: rgba(250, 204, 21, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(234, 179, 8, 0.25);
+}
+
+/* Custom Primary Button (Golden Ceres Yellow) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: #facc15;
+  color: #020617 !important;
+  font-weight: 800;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #fde047;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -4px rgba(250, 204, 21, 0.4);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Custom Secondary Button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(250, 204, 21, 0.25);
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: #facc15;
+  color: #fef08a;
+  background-color: rgba(30, 41, 59, 0.95);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Form input fields */
+.input-field {
+  width: 100%;
+  height: 2.75rem;
+  background: rgba(7, 10, 17, 0.9);
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  border-radius: 0.75rem;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #f8fafc;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Explicit rules to prevent icons from ever merging/overlapping with text or placeholders */
+.input-field.pl-10,
+.input-field.pl-11,
+.input-field.has-icon-left,
+input.pl-10,
+input.pl-11,
+input.has-icon-left,
+select.pl-10,
+select.pl-11,
+select.has-icon-left {
+  padding-left: 2.75rem !important; /* 44px ensures 14px clear space from 16px icon at left-3.5 */
+}
+
+.input-field.pl-8,
+.input-field.pl-9,
+input.pl-8,
+input.pl-9 {
+  padding-left: 2.375rem !important;
+}
+
+.input-field.pr-9,
+.input-field.pr-10,
+select.pr-9,
+select.pr-10 {
+  padding-right: 2.5rem !important;
+}
+
+.input-field:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
+}
+
+/* ========================================================
+   LIGHT MODE DESIGN SPECIFICATIONS (Aesthetically Matched)
+   ======================================================== */
+
+html.light body,
+body.light {
+  background-color: #f4f6fa !important;
+  color: #0f172a !important;
+}
+
+/* Root App container */
+.light .app-root-bg {
+  background-color: #f4f6fa !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Glass Cards */
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+.light .hover-glow:hover {
+  border-color: rgba(234, 179, 8, 0.6) !important;
+  box-shadow: 0 10px 25px -5px rgba(234, 179, 8, 0.18) !important;
+}
+
+/* Navigation bar in Light Mode */
+.light .app-nav-bar {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-bottom-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .app-nav-bar h1 {
+  color: #0f172a !important;
+}
+
+/* Secondary Button in Light Mode */
+.light .btn-secondary {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.light .btn-secondary:hover:not(:disabled) {
+  border-color: #eab308 !important;
+  color: #854d0e !important;
+  background-color: #fefce8 !important;
+}
+
+/* Input fields in Light Mode */
+.light .input-field {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.light .input-field:focus {
+  border-color: #eab308 !important;
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.15) !important;
+}
+
+.light .input-field::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Common Dark Background Classes Overridden in Light Mode (except inside .hero-preserve) */
+.light *:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) > .bg-\[\#070a11\],
+.light .bg-\[\#070a11\]:not(.hero-preserve):not(.hero-preserve *) {
+  background-color: #f1f5f9 !important;
+}
+
+.light *:not(.hero-preserve):not(.hero-preserve *) > .bg-\[\#0c121e\],
+.light .bg-\[\#0c121e\]:not(.hero-preserve):not(.hero-preserve *) {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#070c18\] {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#0a0f1d\] {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#0b1324\] {
+  background-color: #f8fafc !important;
+}
+
+.light .bg-\[\#090d16\] {
+  background-color: #f1f5f9 !important;
+}
+
+.light .bg-\[\#070b14\] {
+  background-color: #f8fafc !important;
+}
+
+.light .bg-slate-900,
+.light .bg-slate-900\/90,
+.light .bg-slate-900\/80,
+.light .bg-slate-900\/60,
+.light .bg-slate-900\/50 {
+  background-color: #f1f5f9 !important;
+}
+
+.light .bg-slate-950,
+.light .bg-slate-950\/80,
+.light .bg-slate-950\/90 {
+  background-color: #e2e8f0 !important;
+}
+
+/* Light mode text colors */
+.light .theme-text-primary,
+.light *:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.badge-preserve) > .text-white,
+.light .text-white:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *):not(.badge-preserve):not(.badge-preserve *) {
+  color: #0f172a !important;
+}
+
+.light .text-slate-100:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) {
+  color: #1e293b !important;
+}
+
+.light .text-slate-200:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) {
+  color: #334155 !important;
+}
+
+.light .text-slate-300:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) {
+  color: #475569 !important;
+}
+
+.light .text-slate-400:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) {
+  color: #64748b !important;
+}
+
+.light .text-slate-500:not(.hero-preserve):not(.hero-preserve *):not(.btn-primary):not(.btn-primary *) {
+  color: #64748b !important;
+}
+
+/* Light mode borders */
+.light .border-slate-800,
+.light .border-slate-800\/80,
+.light .border-slate-800\/90,
+.light .border-slate-800\/60,
+.light .border-slate-700,
+.light .border-white\/5,
+.light .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+.light .divide-slate-800\/60 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* Table styles in light mode */
+.light table thead tr {
+  background-color: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.light table thead th {
+  color: #64748b !important;
+}
+
+.light table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Modal styling in Light Mode */
+.light .modal-card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Seat Selector bus shell in light mode */
+.light .bus-shell-container {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Seat buttons in light mode */
+.light .bus-seat-btn {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+
+.light .bus-seat-btn:hover:not(:disabled) {
+  border-color: #eab308 !important;
+  background-color: #fefce8 !important;
+  color: #854d0e !important;
+}
+
+.light .bus-seat-booked {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #94a3b8 !important;
+}
+
+.light .bus-seat-selected {
+  background-color: #facc15 !important;
+  border-color: #fde047 !important;
+  color: #020617 !important;
+}
+
+.light .bus-seat-priority {
+  background-color: #fffbeb !important;
+  border-color: #f59e0b !important;
+  color: #b45309 !important;
+}
+
+/* Summary Ticket (Boarding Pass) in light mode */
+.light .boarding-pass-card {
+  background-color: #ffffff !important;
+  border-color: rgba(234, 179, 8, 0.4) !important;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08) !important;
+}
+
+.light .boarding-pass-header {
+  background: linear-gradient(to right, #fefce8, #ffffff, #fef9c3) !important;
+  border-bottom-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+.light .boarding-pass-notch {
+  background-color: #f4f6fa !important;
+}
+
+/* Weather and Terminal congestion card in Light Mode */
+.light .weather-hero-card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05) !important;
+}
+
+.light .weather-icon-box {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Ensure Primary button always keeps its high contrast dark text */
+.btn-primary,
+.btn-primary * {
+  color: #020617 !important;
+}
+
+/* Active tab text */
+.active-tab-yellow {
+  background-color: #facc15 !important;
+  color: #020617 !important;
+}
+
+/* Ergonomics reading progress bar */
+@keyframes readingProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+

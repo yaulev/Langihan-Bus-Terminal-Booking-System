@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}Langihan Integrated Bus Terminal · Butuan City (Caraga & Davao Transit){% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <!-- Hero Banner -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="terminal-badge">
+                <span class="badge-dot"></span>
+                <span>Langihan Integrated Bus Terminal · Butuan City</span>
+            </div>
+            <h1 class="hero-title">Langihan Bus Terminal Booking System</h1>
+            <p class="hero-tagline">Your gateway to seamless travel across Caraga and Davao Region.</p>
+            <div class="hero-actions">
+                <a href="{{ url_for('pages.booking_page') }}" class="btn-primary-gold">
+                    <span>Book Your Trip Now</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="{{ url_for('pages.dispatch_board') }}" class="btn-secondary-glass">
+                    <span>Live Dispatch Board</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather, Time & Terminal Congestion Display -->
+    <section class="weather-congestion-card">
+        <div class="wc-grid">
+            <!-- Col 1: Time & Date -->
+            <div class="wc-col">
+                <div class="icon-tile">🕒</div>
+                <div class="col-text">
+                    <span class="col-eyebrow">LANGIHAN TERMINAL TIME</span>
+                    <div class="time-display">
+                        <span class="clock-digits" id="liveClockDigits">11:37</span>
+                        <span class="clock-ampm" id="liveClockAmPm">AM</span>
+                    </div>
+                    <span class="date-str" id="liveDateStr">Philippine Standard Time</span>
+                </div>
+            </div>
+
+            <!-- Col 2: Weather & Temperature -->
+            <div class="wc-col divider-left">
+                <div class="icon-tile weather-sun">☀️</div>
+                <div class="col-text">
+                    <span class="temp-digits">29°C</span>
+                    <span class="temp-sub">Feels 32°C · Partly Sunny</span>
+                    <span class="temp-hint">Warm coastal breeze</span>
+                </div>
+            </div>
+
+            <!-- Col 3: Terminal Crowding -->
+            <div class="wc-col divider-left">
+                <div class="crowd-header">
+                    <span class="pulse-dot green"></span>
+                    <span class="col-eyebrow">TERMINAL CROWDING:</span>
+                </div>
+                <div class="crowd-val text-emerald">
+                    {{ crowding.level | upper }} CONGESTION ({{ crowding.percentage }}%)
+                </div>
+                <div class="crowd-sub">
+                    <span>Avg Wait: {{ crowding.avgWait }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC ERGONOMIC FACTS & TRAVEL COMFORT SECTION (As requested by user) -->
+        <div class="ergonomics-ticker-row" id="ergonomics-section">
+            <div class="ergo-badge">
+                <span class="sparkle-icon">✦</span>
+                <strong>Ergonomics:</strong>
+            </div>
+            <!-- Dynamic rotating text container -->
+            <div class="ergo-content-slider" id="ergoSlider">
+                <p class="ergo-text active" id="dynamicErgoText">
+                    {{ active_tip.text }}
+                </p>
+            </div>
+            <!-- Controls & rotating indicators -->
+            <div class="ergo-controls">
+                <button class="ergo-btn" id="prevErgoBtn" title="Previous tip">‹</button>
+                <span class="ergo-counter" id="ergoCounter">1 / {{ all_tips|length }}</span>
+                <button class="ergo-btn" id="nextErgoBtn" title="Next tip">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional Quick Stats -->
+    <section class="stats-row">
+        <div class="stat-card">
+            <span class="stat-label">Caraga & Davao Destinations</span>
+            <span class="stat-number">{{ routes|length }}</span>
+            <span class="stat-desc">Inter-Provincial Direct Corridors</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Daily Departures</span>
+            <span class="stat-number text-gold">{{ schedules|length }}</span>
+            <span class="stat-desc">Buses & UV Express Vans</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Fares Starting At</span>
+            <span class="stat-number text-gold">₱180</span>
+            <span class="stat-desc">20% discount for Students/Senior/PWD</span>
+        </div>
+    </section>
+
+    <!-- Schedules Table -->
+    <section class="schedules-section">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Caraga & Davao Departure Schedules</h2>
+                <p class="section-sub">Direct express trips departing daily from Langihan Integrated Bus Terminal, Butuan City.</p>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="schedules-table">
+                    <thead>
+                        <tr>
+                            <th>Route & Carrier</th>
+                            <th>Vehicle & Class</th>
+                            <th>Bay</th>
+                            <th>Departure</th>
+                            <th>Duration</th>
+                            <th>Fare</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in schedules %}
+                        <tr>
+                            <td>
+                                <strong class="route-title">
+                                    {% for r in routes %}{% if r.id == s.routeId %}Langihan → {{ r.destination }}{% endif %}{% endfor %}
+                                </strong>
+                                <span class="operator-name">{{ s.operator }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-pill {% if s.vehicleType == 'Bus' %}pill-bus{% else %}pill-van{% endif %}">
+                                    {{ s.vehicleType }} · {{ s.busClass }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge-bay">Bay {{ s.bayNumber }}</span>
+                            </td>
+                            <td>
+                                <span class="dep-time">{{ s.departureTime }}</span>
+                            </td>
+                            <td>{{ s.duration }}</td>
+                            <td>
+                                <strong class="fare-text">₱{{ s.baseFare }}</strong>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('pages.booking_page', schedule_id=s.id) }}" class="btn-book-sm">
+                                    Book Seat
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Embedded ergonomic tips for dynamic rotation
+    window.ERGONOMIC_TIPS = {{ all_tips | tojson }};
+</script>
+{% endblock %}

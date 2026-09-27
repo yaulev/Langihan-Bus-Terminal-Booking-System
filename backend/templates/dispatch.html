@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Live Terminal Dispatch (FIDS) · Langihan Integrated Bus Terminal{% endblock %}
+
+{% block content %}
+<div class="dispatch-page">
+    <div class="page-header">
+        <h1 class="page-title">Live Terminal Dispatch Board (FIDS)</h1>
+        <p class="page-sub">Real-time regional flight & bus information display for Langihan Integrated Bus Terminal, Butuan City.</p>
+    </div>
+
+    <!-- Active Bays Grid -->
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="schedules-table">
+                <thead>
+                    <tr>
+                        <th>Trip #</th>
+                        <th>Destination</th>
+                        <th>Carrier</th>
+                        <th>Bay</th>
+                        <th>Sched Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in schedules %}
+                    <tr>
+                        <td><span class="font-mono text-gold">LT-{{ s.id.split('-')[1] }}</span></td>
+                        <td>
+                            <strong>
+                                {% if s.routeId == 'LBT-DVO' %}Davao City (Ecoland)
+                                {% elif s.routeId == 'LBT-SUR' %}Surigao City (Siargao Ferry)
+                                {% elif s.routeId == 'LBT-BUT' %}San Francisco / Bayugan Hub
+                                {% else %}Tandag City & Bislig{% endif %}
+                            </strong>
+                        </td>
+                        <td>{{ s.operator }} ({{ s.vehicleType }})</td>
+                        <td><span class="badge-bay">Bay {{ s.bayNumber }}</span></td>
+                        <td><strong class="font-mono">{{ s.departureTime }}</strong></td>
+                        <td>
+                            <span class="badge-pill pill-boarding">BOARDING</span>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('pages.booking_page', schedule_id=s.id) }}" class="btn-book-sm">
+                                Book
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
